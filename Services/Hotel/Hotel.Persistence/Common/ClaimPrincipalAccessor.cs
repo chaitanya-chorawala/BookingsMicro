@@ -1,0 +1,32 @@
+﻿using Hotel.Common.Model;
+using Hotel.Core.Contract.Common;
+using Microsoft.AspNetCore.Http;
+using System.Net.Http;
+using System.Security.Claims;
+
+namespace Hotel.Persistence.Common;
+
+public class ClaimPrincipalAccessor : IClaimPrincipalAccessor
+{
+    private readonly HttpContext? _httpContext;
+
+    public ClaimPrincipalAccessor(IHttpContextAccessor httpContextAccessor)
+    {
+        _httpContext = httpContextAccessor.HttpContext;
+    }
+    public ClaimsPrincipal? ClaimsPrincipal => _httpContext?.User;
+
+    public User User => SetUserInfo();
+
+    private User SetUserInfo()
+    {
+        return new User()
+        {
+            Id = Convert.ToInt64(ClaimsPrincipal?.Claims?.Where(x => x.Type == ClaimTypes.NameIdentifier).FirstOrDefault()?.Value),
+            Name = ClaimsPrincipal?.Claims?.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault()?.Value,
+            Email = ClaimsPrincipal?.Claims?.Where(x => x.Type == ClaimTypes.Email).FirstOrDefault()?.Value,
+            Gender = ClaimsPrincipal?.Claims?.Where(x => x.Type == ClaimTypes.Gender).FirstOrDefault()?.Value,
+            Role = ClaimsPrincipal?.Claims?.Where(x => x.Type == ClaimTypes.Role).FirstOrDefault()?.Value,
+        };
+    }
+}
