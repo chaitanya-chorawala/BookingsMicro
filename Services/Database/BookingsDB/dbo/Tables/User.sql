@@ -1,0 +1,12 @@
+﻿CREATE TABLE [dbo].[User](
+	[UserId] [varchar](50) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Password] [varchar](20) NOT NULL,
+	[Email] [varchar](100) NULL,
+	[Role] [varchar](20) NOT NULL,
+	[IsActive] [bit] NOT NULL,
+ CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]

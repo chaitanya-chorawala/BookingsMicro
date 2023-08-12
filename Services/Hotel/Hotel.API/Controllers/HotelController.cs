@@ -19,7 +19,7 @@ public class HotelController : ControllerBase
     /// <summary>
     /// List all hotels
     /// </summary>
-    /// <returns></returns> 
+    /// <returns></returns>     
     [AllowAnonymous]
     [HttpGet("ListAllHotel")]
     public async Task<IActionResult> ListAllHotel()
@@ -34,8 +34,7 @@ public class HotelController : ControllerBase
             throw;
         }
     }
-
-    [AllowAnonymous]
+    
     [HttpGet("GetHotelById/{id:int}")]
     public async Task<IActionResult> GetHotelById(int id)
     {

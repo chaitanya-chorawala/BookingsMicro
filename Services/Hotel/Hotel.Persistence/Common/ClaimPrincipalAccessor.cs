@@ -24,8 +24,7 @@ public class ClaimPrincipalAccessor : IClaimPrincipalAccessor
         {
             Id = Convert.ToInt64(ClaimsPrincipal?.Claims?.Where(x => x.Type == ClaimTypes.NameIdentifier).FirstOrDefault()?.Value),
             Name = ClaimsPrincipal?.Claims?.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault()?.Value,
-            Email = ClaimsPrincipal?.Claims?.Where(x => x.Type == ClaimTypes.Email).FirstOrDefault()?.Value,
-            Gender = ClaimsPrincipal?.Claims?.Where(x => x.Type == ClaimTypes.Gender).FirstOrDefault()?.Value,
+            Email = ClaimsPrincipal?.Claims?.Where(x => x.Type == ClaimTypes.Email).FirstOrDefault()?.Value,            
             Role = ClaimsPrincipal?.Claims?.Where(x => x.Type == ClaimTypes.Role).FirstOrDefault()?.Value,
         };
     }
