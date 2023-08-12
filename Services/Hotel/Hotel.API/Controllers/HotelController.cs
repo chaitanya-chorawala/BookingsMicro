@@ -35,6 +35,11 @@ public class HotelController : ControllerBase
         }
     }
     
+    /// <summary>
+    /// Get Hotel By Id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("GetHotelById/{id:int}")]
     public async Task<IActionResult> GetHotelById(int id)
     {

@@ -71,9 +71,10 @@
     <Build Include="dbo\Tables\Hotel.sql" />
     <Build Include="dbo\Tables\Guest.sql" />
     <Build Include="dbo\Stored Procedures\HotelGet.sql" />
-    <None Include="Scripts\ScriptsIgnoredOnImport.sql" />
     <Build Include="dbo\Stored Procedures\HotelGetById.sql" />
     <Build Include="dbo\Tables\RefreshToken.sql" />
     <Build Include="dbo\Tables\User.sql" />
+    <Build Include="dbo\Stored Procedures\ActivityGet.sql" />
+    <Build Include="dbo\Stored Procedures\ActivityGetById.sql" />
   </ItemGroup>
 </Project>
