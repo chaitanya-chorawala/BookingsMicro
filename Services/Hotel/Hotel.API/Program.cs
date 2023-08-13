@@ -96,8 +96,7 @@ try
     });
 
 
-    app.ConfigureExceptionHandler();
-    app.UseHttpsRedirection();
+    app.ConfigureExceptionHandler();    
     app.UseCors("ApiCorsPolicy");
     app.UseAuthentication();
     app.UseAuthorization();

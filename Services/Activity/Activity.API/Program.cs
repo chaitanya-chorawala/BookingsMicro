@@ -96,8 +96,7 @@ try
     });
 
 
-    app.ConfigureExceptionHandler();
-    app.UseHttpsRedirection();
+    app.ConfigureExceptionHandler();    
     app.UseCors("ApiCorsPolicy");
     app.UseAuthentication();
     app.UseAuthorization();
@@ -107,4 +106,6 @@ try
     app.Run();
 }
 catch (Exception ex)
-{ }
+{
+    throw;
+}
