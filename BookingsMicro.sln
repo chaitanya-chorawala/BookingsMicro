@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Activity.Core", "Services\A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Activity.Persistence", "Services\Activity\Activity.Persistence\Activity.Persistence.csproj", "{7B8C344B-157E-4D1E-A66D-9FB4608C60D0}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{0035923C-D8A5-40AC-84F2-E7FA2A0F2894}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{7B8C344B-157E-4D1E-A66D-9FB4608C60D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B8C344B-157E-4D1E-A66D-9FB4608C60D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B8C344B-157E-4D1E-A66D-9FB4608C60D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0035923C-D8A5-40AC-84F2-E7FA2A0F2894}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0035923C-D8A5-40AC-84F2-E7FA2A0F2894}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0035923C-D8A5-40AC-84F2-E7FA2A0F2894}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0035923C-D8A5-40AC-84F2-E7FA2A0F2894}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

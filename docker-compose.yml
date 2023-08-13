@@ -1,0 +1,53 @@
+version: '3.4'
+
+services:
+  sql-server:
+    container_name: 'sql-server'
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      MSSQL_SA_PASSWORD: pa55w0rd!
+      ACCEPT_EULA: Y
+    ports:
+      - "1401:1433"
+
+  rabbitmq:
+    container_name: 'rabbitmq'
+    image: rabbitmq:3-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+
+  hotel.api:
+    image: ${DOCKER_REGISTRY-}hotelapi
+    build:
+      context: .
+      dockerfile: Services/Hotel/Hotel.API/Dockerfile
+    depends_on:
+      - sql-server
+      - redis_cache
+      - rabbitmq
+
+  activity.api:
+    image: ${DOCKER_REGISTRY-}activityapi
+    build:
+      context: .
+      dockerfile: Services/Activity/Activity.API/Dockerfile
+    depends_on:
+      - sql-server
+
+  identity.api:
+    image: ${DOCKER_REGISTRY-}identityapi
+    build:
+      context: .
+      dockerfile: Services/Identity/Identity.API/Dockerfile
+    depends_on:
+      - sql-server    
+
+  redis_cache:
+    image: redis
+    container_name: 'cache'
+    ports:
+      - "6379:6379"

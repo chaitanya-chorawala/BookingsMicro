@@ -13,22 +13,15 @@ public class MessageBusClient : IMessageBusClient, IDisposable
     private readonly IConnection _connection;
     private readonly IModel _channel;
 
-    public MessageBusClient(IConfiguration configuration)
+    public MessageBusClient(IConfiguration configuration, IConnection connection, IModel model)
     {
         _configuration = configuration;
-        var factory = new ConnectionFactory()
-        {
-            HostName = _configuration["RabbitMQ:Host"]!,            
-            UserName = _configuration["RabbitMQ:User"]!,
-            Password = _configuration["RabbitMQ:Pass"]!,
-            VirtualHost = _configuration["RabbitMQ:VirtualHost"]!
-        };
+        
 
         try
         {
-            _connection = factory.CreateConnection();
-            _channel = _connection.CreateModel();
-
+            _connection = connection;
+            _channel = model;            
             _channel.ExchangeDeclare(exchange: "trigger", type: ExchangeType.Fanout);
             _connection.ConnectionShutdown += RabbitMQ_ConnectionShutDown;
 
@@ -37,6 +30,7 @@ public class MessageBusClient : IMessageBusClient, IDisposable
         catch (Exception ex)
         {
             Console.WriteLine($"--> Could not connect to the Message Bus: {ex.Message}");
+            throw;
         }
     }
 

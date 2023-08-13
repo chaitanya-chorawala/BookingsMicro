@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using System.IO.Compression;
 using System.Reflection;
 using System.Text;
+
 try
 {
     var builder = WebApplication.CreateBuilder(args);
@@ -30,7 +31,7 @@ try
     });
 
     // Add services to the container.
-    builder.Services.AddPersistenceServices();
+    builder.Services.AddPersistenceServices(configuration);
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddControllers();
 
@@ -87,6 +88,12 @@ try
             ValidAudience = builder.Configuration["JWT:ValidAudience"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]!))
         };
+    });
+
+    builder.Services.AddStackExchangeRedisCache(options =>
+    {
+        options.Configuration = "redis_cache:6379"; // redis is the container name of the redis service. 6379 is the default port
+        options.InstanceName = "SampleInstance";
     });
 
     var app = builder.Build();

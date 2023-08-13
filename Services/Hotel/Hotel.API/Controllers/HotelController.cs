@@ -1,7 +1,12 @@
-﻿using Hotel.Core.Contract.Persistence;
+﻿using Hotel.Common.Model;
+using Hotel.Core.Contract.Persistence;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
+using System.Text.Json;
 
 namespace Hotel.API.Controllers;
 
@@ -11,11 +16,13 @@ public class HotelController : ControllerBase
 {
     private readonly IHotelRepository _hotelRepository;
     private readonly IHotelService _hotelService;
+    private readonly IDistributedCache _cache;
 
-    public HotelController(IHotelRepository hotelRepository, IHotelService hotelService)
+    public HotelController(IHotelRepository hotelRepository, IHotelService hotelService, IDistributedCache cache)
     {
         _hotelRepository = hotelRepository;
         _hotelService = hotelService;
+        _cache = cache;
     }
 
     /// <summary>
@@ -28,7 +35,19 @@ public class HotelController : ControllerBase
     {
         try
         {
+            string cacheKey = "hotelList";            
+
+            var cacheStr = await _cache.GetStringAsync(cacheKey);
+            if (!string.IsNullOrEmpty(cacheStr))
+            {
+                var cachedHotelList = JsonSerializer.Deserialize<IEnumerable<HotelResponse>>(cacheStr);
+                return Ok(cachedHotelList);
+            }  
+            
             var hotelList = await _hotelRepository.HotelList();
+            cacheStr = JsonSerializer.Serialize(hotelList);
+            _cache.SetString(cacheKey, cacheStr);
+
             return Ok(hotelList);
         }
         catch (Exception)
