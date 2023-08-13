@@ -21,6 +21,7 @@ services:
       - '15672:15672'
 
   hotel.api:
+    container_name: 'hotel.api'
     image: ${DOCKER_REGISTRY-}hotelapi
     build:
       context: .
@@ -31,6 +32,7 @@ services:
       - rabbitmq
 
   activity.api:
+    container_name: 'activity.api'
     image: ${DOCKER_REGISTRY-}activityapi
     build:
       context: .
@@ -39,6 +41,7 @@ services:
       - sql-server
 
   identity.api:
+    container_name: 'identity.api'
     image: ${DOCKER_REGISTRY-}identityapi
     build:
       context: .
@@ -51,3 +54,13 @@ services:
     container_name: 'cache'
     ports:
       - "6379:6379"
+
+  gateway.api:
+    image: ${DOCKER_REGISTRY-}gatewayapi
+    build:
+      context: .
+      dockerfile: Gateway/Gateway.API/Dockerfile
+    depends_on:
+      - hotel.api
+      - activity.api
+      - identity.api

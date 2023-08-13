@@ -6,7 +6,8 @@
       "serviceActions": {
         "hotel.api": "StartDebugging",
         "activity.api": "StartDebugging",
-        "identity.api": "StartDebugging"
+        "identity.api": "StartDebugging",
+        "gateway.api": "StartDebugging"
       }
     }
   }

@@ -1,0 +1,86 @@
+{
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/api/hotel/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "DownstreamPathTemplate": "/api/hotel/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "hotel.api",
+          "Port": 80
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "SwaggerKey": "hotel"
+    },
+    {
+      "UpstreamPathTemplate": "/api/activity/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "DownstreamPathTemplate": "/api/activity/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "activity.api",
+          "Port": 80
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "SwaggerKey": "activity"
+    },
+    {
+      "DownstreamPathTemplate": "/api/auth/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "identity.api",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/auth/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "SwaggerKey": "identity"
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://gateway.api:80"
+  },
+  "SwaggerEndPoints": [
+    {
+      "Key": "hotel",
+      "Config": [
+        {
+          "Name": "Hotel API",
+          "Version": "v1",
+          "Url": "http://hotel.api:80/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "activity",
+      "Config": [
+        {
+          "Name": "Activity API",
+          "Version": "v1",
+          "Url": "http://activity.api:80/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "identity",
+      "Config": [
+        {
+          "Name": "Identity API",
+          "Version": "v1",
+          "Url": "http://identity.api:80/swagger/v1/swagger.json"
+        }
+      ]
+    }
+  ]
+}
