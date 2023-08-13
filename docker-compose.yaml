@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  hotel:
+    container_name: 'hotel-srv'
+    build: 
+      context: .
+      dockerfile: Services/Hotel/Hotel.API/Dockerfile
+  # activity:
+  #   container_name: 'activity-srv'
+  #   build: 
+  #     context: .
+  #     dockerfile: Services/Activity/Activity.API/Dockerfile
+  # identity:
+  #   container_name: 'identity-srv'
+  #   build: 
+  #     context: .
+  #     dockerfile: Services/Identity/Identity.API/Dockerfile  
+  rabbitmq:
+    container_name: 'rabbitmq'
+    image: rabbitmq:3-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - '5672:5672'
+      - '15672:15672'

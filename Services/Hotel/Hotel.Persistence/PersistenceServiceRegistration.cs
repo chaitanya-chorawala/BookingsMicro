@@ -3,6 +3,7 @@ using Hotel.Core.Contract.Persistence;
 using Hotel.Persistence.Common;
 using Hotel.Persistence.Configuration;
 using Hotel.Persistence.Repository;
+using Hotel.Persistence.Service;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -13,8 +14,10 @@ public static class PersistenceServiceRegistration
     public static IServiceCollection AddPersistenceServices(this IServiceCollection services)
     {
         services.AddSingleton<ApplicationDbContext>();
+        services.TryAddSingleton<IMessageBusClient, MessageBusClient>();
         services.TryAddScoped<IClaimPrincipalAccessor, ClaimPrincipalAccessor>();
         services.TryAddScoped<IHotelRepository, HotelRepository>();
+        services.TryAddScoped<IHotelService, HotelService>();
 
         return services;
     }

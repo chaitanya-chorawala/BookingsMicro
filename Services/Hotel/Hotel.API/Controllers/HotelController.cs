@@ -6,14 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 namespace Hotel.API.Controllers;
 
 [Route("api/[controller]")]
-[ApiController, Authorize]
+[ApiController]
 public class HotelController : ControllerBase
 {
     private readonly IHotelRepository _hotelRepository;
+    private readonly IHotelService _hotelService;
 
-    public HotelController(IHotelRepository hotelRepository)
+    public HotelController(IHotelRepository hotelRepository, IHotelService hotelService)
     {
         _hotelRepository = hotelRepository;
+        _hotelService = hotelService;
     }
 
     /// <summary>
@@ -45,8 +47,27 @@ public class HotelController : ControllerBase
     {
         try
         {
-            var hotelList = await _hotelRepository.GetHotelById(id);
-            return Ok(hotelList);
+            var hotel = await _hotelRepository.GetHotelById(id);
+            return Ok(hotel);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Book hotel By Id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>    
+    [HttpPost("BookHotel/{id:int}")]
+    public async Task<IActionResult> BookHotel(int id)
+    {
+        try
+        {
+            await _hotelService.BookHotel(id);
+            return Ok();
         }
         catch (Exception)
         {
