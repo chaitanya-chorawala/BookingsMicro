@@ -37,7 +37,8 @@ public static class PersistenceServiceRegistration
                     };
 
                     _connection = factory.CreateConnection();
-                    _channel = _connection.CreateModel();
+                    _channel = _connection.CreateModel();                    
+                    break; // Exit the retry loop on successful connection
                 }
                 catch (Exception ex)
                 {

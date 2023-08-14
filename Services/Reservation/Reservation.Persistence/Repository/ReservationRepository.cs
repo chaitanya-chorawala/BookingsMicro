@@ -21,15 +21,14 @@ public class ReservationRepository : IReservationRepository
         try
         {
             using IDbConnection conn = _context.CreateConnection();
-            var parameters = new
-            {
-                id = model.Id,
-                check_in_date = model.check_in_date,
-                check_out_date = model.check_out_date,
-                status = model.status,
-                type = model.type,
-                userId = model.userId
-            };
+            var parameters = new DynamicParameters();
+            parameters.Add("id", model.Id, DbType.Int32, ParameterDirection.Input);                 
+            parameters.Add("check_in_date", model.check_in_date.ToString(), DbType.String, ParameterDirection.Input);                 
+            parameters.Add("check_out_date", model.check_out_date.ToString(), DbType.String, ParameterDirection.Input);                 
+            parameters.Add("status", model.status, DbType.Int32, ParameterDirection.Input);                 
+            parameters.Add("type", model.type, DbType.Int32, ParameterDirection.Input);                 
+            parameters.Add("userId", model.userId, DbType.String, ParameterDirection.Input);
+            
             var reservation = await conn.QueryFirstOrDefaultAsync<ReservationResponse>(
                 "ReservationAdd",
                 param: parameters,
