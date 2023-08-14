@@ -7,18 +7,15 @@ namespace Reservation.Persistence.Service;
 public class ReservationService : IReservationService
 {
     private readonly IReservationRepository _reservationRepository;
-    private readonly IHotelRepository _hotelRepository;
-    private readonly IMessageBusClient _messageBusClient;
+    private readonly IHotelRepository _hotelRepository;    
     private readonly User _user;
 
     public ReservationService(IReservationRepository reservationRepository
-        , IHotelRepository hotelRepository
-        , IMessageBusClient messageBusClient
+        , IHotelRepository hotelRepository        
         , IClaimPrincipalAccessor claimPrincipalAccessor)
     {
         _reservationRepository = reservationRepository;
-        _hotelRepository = hotelRepository;
-        _messageBusClient = messageBusClient;
+        _hotelRepository = hotelRepository;        
         _user = claimPrincipalAccessor.User;
     }
     public async Task BookActivity(int activityid, string name)
@@ -31,11 +28,10 @@ public class ReservationService : IReservationService
                 userId = _user?.Id ?? "",
                 check_in_date = DateOnly.FromDateTime(DateTime.Now),
                 check_out_date = DateOnly.FromDateTime(DateTime.Now.AddDays(1)),
-                status = ReservationStatus.PENDING,
+                status = ReservationStatus.SUCCESS,
                 type = ReservationType.ACTIVITY
             };
-            var reservation = await _reservationRepository.AddReservation(reserv);
-            DoPayment(reservation.reservationId, name, "Activity_Reservation");
+            var reservation = await _reservationRepository.AddReservation(reserv);            
         }
         catch (Exception ex)
         {
@@ -53,26 +49,14 @@ public class ReservationService : IReservationService
                 userId = _user?.Id ?? "",
                 check_in_date = DateOnly.FromDateTime(DateTime.Now),
                 check_out_date = DateOnly.FromDateTime(DateTime.Now.AddDays(2)),
-                status = ReservationStatus.PENDING,
+                status = ReservationStatus.SUCCESS,
                 type = ReservationType.HOTEL
             };
-            var reservation = await _reservationRepository.AddReservation(reserv);
-            DoPayment(reservation.reservationId, name, "Hotel_Reservation");
+            var reservation = await _reservationRepository.AddReservation(reserv);            
         }
         catch (Exception ex)
         {
             throw;
         }
-    }
-    
-    private void DoPayment(int reservationId, string name, string eventName)
-    {
-        var message = new ReservationPublishedDto()
-        {
-            Id = reservationId,
-            Name = name,
-            Event = eventName
-        };
-        _messageBusClient.PublishReservation(message);
-    }
+    }    
 }
