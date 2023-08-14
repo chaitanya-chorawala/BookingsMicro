@@ -113,4 +113,6 @@ try
     app.Run();
 }
 catch (Exception ex)
-{ }
+{
+    throw;
+}

@@ -13,22 +13,40 @@ namespace Hotel.Persistence;
 
 public static class PersistenceServiceRegistration
 {
+    private static IConnection _connection;
+    private static IModel _channel;
+
     public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
     {
         try
         {
-            //Add Rabbit MQ
-            var factory = new ConnectionFactory()
+            var retryCount = 0;
+            var maxRetryAttempts = 10;
+            var retryDelaySeconds = 20;
+            while (retryCount < maxRetryAttempts)
             {
-                HostName = configuration["RabbitMQ:Host"]!,                
-                UserName = configuration["RabbitMQ:User"]!,
-                Password = configuration["RabbitMQ:Pass"]!,
-                VirtualHost = configuration["RabbitMQ:VirtualHost"]!
-            };
+                try
+                {
+                    //Add Rabbit MQ
+                    var factory = new ConnectionFactory()
+                    {
+                        HostName = configuration["RabbitMQ:Host"]!,
+                        UserName = configuration["RabbitMQ:User"]!,
+                        Password = configuration["RabbitMQ:Pass"]!,
+                        VirtualHost = configuration["RabbitMQ:VirtualHost"]!
+                    };
 
-            var _connection = factory.CreateConnection();
-            var _channel = _connection.CreateModel();
-
+                    _connection = factory.CreateConnection();
+                    _channel = _connection.CreateModel();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Failed to connect to RabbitMQ: {ex.Message}");
+                    Console.WriteLine($"Retrying in {retryDelaySeconds} seconds...");
+                    retryCount++;
+                    System.Threading.Thread.Sleep(retryDelaySeconds * 1000);
+                }
+            }
             services.AddSingleton<ApplicationDbContext>();
             services.TryAddSingleton<IMessageBusClient>(new MessageBusClient(configuration, _connection, _channel));
             services.TryAddScoped<IClaimPrincipalAccessor, ClaimPrincipalAccessor>();
