@@ -3,12 +3,18 @@
     "Docker Compose": {
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "hotel.api",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/swagger",
       "serviceActions": {
         "hotel.api": "StartDebugging",
         "activity.api": "StartDebugging",
         "identity.api": "StartDebugging",
         "gateway.api": "StartDebugging",
-        "reservation.api": "StartDebugging"
+        "reservation.api": "StartDebugging",
+        "rabbitmq": "StartWithoutDebugging",
+        "redis_cache": "StartWithoutDebugging",
+        "sql-server": "StartWithoutDebugging"
       }
     }
   }
