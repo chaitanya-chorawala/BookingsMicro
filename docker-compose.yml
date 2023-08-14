@@ -8,7 +8,7 @@ services:
       MSSQL_SA_PASSWORD: pa55w0rd!
       ACCEPT_EULA: Y
     ports:
-      - "1401:1433"
+      - "1401:1433"    
 
   rabbitmq:
     container_name: 'rabbitmq'
@@ -19,6 +19,11 @@ services:
     ports:
       - '5672:5672'
       - '15672:15672'
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 30s
+      timeout: 30s
+      retries: 10
 
   hotel.api:
     container_name: 'hotel.api'
@@ -26,19 +31,25 @@ services:
     build:
       context: .
       dockerfile: Services/Hotel/Hotel.API/Dockerfile
+    restart: unless-stopped
     depends_on:
-      - sql-server
-      - redis_cache
-      - rabbitmq
-
+      sql-server:
+        condition: service_started        
+      redis_cache:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy        
+      
   activity.api:
     container_name: 'activity.api'
     image: ${DOCKER_REGISTRY-}activityapi
     build:
       context: .
       dockerfile: Services/Activity/Activity.API/Dockerfile
+    restart: unless-stopped
     depends_on:
-      - sql-server
+      sql-server:
+        condition: service_started        
 
   identity.api:
     container_name: 'identity.api'
@@ -46,8 +57,10 @@ services:
     build:
       context: .
       dockerfile: Services/Identity/Identity.API/Dockerfile
+    restart: unless-stopped
     depends_on:
-      - sql-server    
+      sql-server:
+        condition: service_started        
 
   redis_cache:
     image: redis
@@ -56,11 +69,30 @@ services:
       - "6379:6379"
 
   gateway.api:
+    container_name: 'gateway.api'
     image: ${DOCKER_REGISTRY-}gatewayapi
     build:
       context: .
       dockerfile: Gateway/Gateway.API/Dockerfile
     depends_on:
-      - hotel.api
-      - activity.api
-      - identity.api
+      hotel.api:
+        condition: service_started
+      activity.api:
+        condition: service_started
+      identity.api:
+        condition: service_started
+
+  reservation.api:
+    container_name: 'reservation.api'
+    image: ${DOCKER_REGISTRY-}reservationapi
+    build:
+      context: .
+      dockerfile: Services/Reservation/Reservation.API/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      sql-server:
+        condition: service_started        
+      redis_cache:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy        
