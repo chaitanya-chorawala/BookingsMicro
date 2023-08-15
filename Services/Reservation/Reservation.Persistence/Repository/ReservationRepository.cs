@@ -1,9 +1,10 @@
-﻿using Dapper;
+﻿
 using Reservation.Common.Model;
 using Reservation.Common.ExceptionHandler;
 using Reservation.Core.Contract.Persistence;
 using Reservation.Persistence.Configuration;
 using System.Data;
+using Dapper;
 
 namespace Reservation.Persistence.Repository;
 
@@ -64,13 +65,21 @@ public class ReservationRepository : IReservationRepository
         }
     }
 
-    public async Task<IEnumerable<ReservationResponse>> ReservationList()
+    public async Task<GenericResponseWithPaging<IEnumerable<ReservationResponse>?>> ReservationList(int pageIndex, int pageSize)
     {
         try
         {
-            using IDbConnection conn = _context.CreateConnection();
-            var reservationList = await conn.QueryAsync<ReservationResponse>("ReservationGet", commandType: CommandType.StoredProcedure);
-            return reservationList;
+            using var conn = _context.CreateConnection();
+            var parameters = new DynamicParameters();
+            parameters.Add("@PageIndex", pageIndex, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@PageSize", pageSize, DbType.Int32, ParameterDirection.Input);
+            var result = await conn.QueryMultipleAsync("ReservationGet",parameters,commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+            var response = new GenericResponseWithPaging<IEnumerable<ReservationResponse>>()
+            {
+                Data = result.Read<ReservationResponse>(),
+                Pagination = result.Read<PagingResponse>()
+            };
+            return response;
         }
         catch (Exception ex)
         {

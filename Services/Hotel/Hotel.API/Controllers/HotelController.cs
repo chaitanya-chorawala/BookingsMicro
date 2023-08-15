@@ -28,8 +28,7 @@ public class HotelController : ControllerBase
     /// <summary>
     /// List all hotels
     /// </summary>
-    /// <returns></returns>     
-    [AllowAnonymous]
+    /// <returns></returns>         
     [HttpGet("ListAllHotel")]
     public async Task<IActionResult> ListAllHotel()
     {
@@ -46,7 +45,12 @@ public class HotelController : ControllerBase
             
             var hotelList = await _hotelRepository.HotelList();
             cacheStr = JsonSerializer.Serialize(hotelList);
-            _cache.SetString(cacheKey, cacheStr);
+
+            var cacheEntryOptions = new DistributedCacheEntryOptions()
+                        .SetSlidingExpiration(TimeSpan.FromSeconds(60))
+                        .SetAbsoluteExpiration(TimeSpan.FromSeconds(3600));
+
+            await _cache.SetStringAsync(cacheKey, cacheStr, cacheEntryOptions);
 
             return Ok(hotelList);
         }
@@ -80,6 +84,7 @@ public class HotelController : ControllerBase
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>    
+    [Authorize]
     [HttpPost("BookHotel/{id:int}")]
     public async Task<IActionResult> BookHotel(int id)
     {

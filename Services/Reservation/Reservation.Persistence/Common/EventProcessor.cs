@@ -50,7 +50,7 @@ public class EventProcessor : IEventProcessor
             using var scope = _scopeFactory.CreateScope();
             var service = scope.ServiceProvider.GetRequiredService<IReservationService>();
             var reservationPublishedDto = JsonSerializer.Deserialize<ReservationPublishedDto>(reservationPublishedMsg);
-            await service.BookHotel(reservationPublishedDto!.Id, reservationPublishedDto!.Name);
+            await service.BookHotel(reservationPublishedDto!.Id, reservationPublishedDto!.UserId);
         }
         catch (Exception ex)
         {

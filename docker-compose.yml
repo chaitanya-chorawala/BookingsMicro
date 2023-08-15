@@ -81,6 +81,8 @@ services:
         condition: service_started
       identity.api:
         condition: service_started
+      reservation.api:
+        condition: service_started
 
   reservation.api:
     container_name: 'reservation.api'

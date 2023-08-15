@@ -1,7 +1,7 @@
 ﻿using Activity.Common.Model;
 using Activity.Core.Contract.Common;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
-using System.Net.Http;
 using System.Security.Claims;
 
 namespace Activity.Persistence.Common;
@@ -17,6 +17,7 @@ public class ClaimPrincipalAccessor : IClaimPrincipalAccessor
     public ClaimsPrincipal? ClaimsPrincipal => _httpContext?.User;
 
     public User User => SetUserInfo();
+    public string AccessToken => _httpContext?.GetTokenAsync("access_token").GetAwaiter().GetResult() ?? "";
 
     private User SetUserInfo()
     {

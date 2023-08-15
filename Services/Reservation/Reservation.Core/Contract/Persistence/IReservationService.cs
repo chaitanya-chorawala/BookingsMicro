@@ -2,6 +2,6 @@
 
 public interface IReservationService
 {
-    Task BookHotel(int hotelid, string name);
-    Task BookActivity(int activityid, string name);
+    Task BookHotel(int hotelid, string userId);
+    Task BookActivity(int activityid);
 }

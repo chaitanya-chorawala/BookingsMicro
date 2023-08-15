@@ -24,7 +24,7 @@ try
         {
             var allowedOriginAddress = configuration.GetValue<string>("AllowedCorsUrls");
             var addresses = allowedOriginAddress.Split(';');
-            builder.WithOrigins(addresses)
+            builder.AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader();
         });
@@ -93,7 +93,7 @@ try
     builder.Services.AddStackExchangeRedisCache(options =>
     {
         options.Configuration = "redis_cache:6379"; // redis is the container name of the redis service. 6379 is the default port
-        options.InstanceName = "SampleInstance";
+        options.InstanceName = "SampleInstance";        
     });
 
     var app = builder.Build();

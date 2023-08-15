@@ -7,4 +7,5 @@ public interface IClaimPrincipalAccessor
 {
     ClaimsPrincipal? ClaimsPrincipal { get; }
     User User { get; }
+    string AccessToken { get; }
 }

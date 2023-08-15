@@ -18,7 +18,7 @@ public class ReservationService : IReservationService
         _hotelRepository = hotelRepository;        
         _user = claimPrincipalAccessor.User;
     }
-    public async Task BookActivity(int activityid, string name)
+    public async Task BookActivity(int activityid)
     {
         try
         {
@@ -39,14 +39,14 @@ public class ReservationService : IReservationService
         }
     }
 
-    public async Task BookHotel(int hotelid, string name)
+    public async Task BookHotel(int hotelid, string userId)
     {
         try
         {
             AddReservation reserv = new AddReservation()
             {
                 Id = hotelid,
-                userId = _user?.Id ?? "",
+                userId = userId,
                 check_in_date = DateOnly.FromDateTime(DateTime.Now),
                 check_out_date = DateOnly.FromDateTime(DateTime.Now.AddDays(2)),
                 status = ReservationStatus.SUCCESS,

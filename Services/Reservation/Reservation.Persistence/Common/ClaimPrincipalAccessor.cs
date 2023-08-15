@@ -3,6 +3,7 @@ using Reservation.Core.Contract.Common;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Reservation.Persistence.Common;
 
@@ -17,6 +18,8 @@ public class ClaimPrincipalAccessor : IClaimPrincipalAccessor
     public ClaimsPrincipal? ClaimsPrincipal => _httpContext?.User;
 
     public User User => SetUserInfo();
+
+    public string AccessToken => _httpContext?.GetTokenAsync("access_token").GetAwaiter().GetResult() ?? "";
 
     private User SetUserInfo()
     {

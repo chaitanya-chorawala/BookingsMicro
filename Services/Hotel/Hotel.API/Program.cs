@@ -24,7 +24,7 @@ try
         {
             var allowedOriginAddress = configuration.GetValue<string>("AllowedCorsUrls");
             var addresses = allowedOriginAddress.Split(';');
-            builder.WithOrigins(addresses)
+            builder.AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader();
         });

@@ -36,20 +36,13 @@ try
     builder.Services.AddOcelot();
     builder.Services.AddSwaggerForOcelot(builder.Configuration);
 
-    var app = builder.Build();
-
-    app.UseSwagger();
+    var app = builder.Build();    
     app.UseSwaggerForOcelotUI();
+    
+    app.UseAuthentication();    
 
-
-    app.UseHttpsRedirection();
-
-    app.UseAuthentication();
-    app.UseAuthorization();
-
-    await app.UseOcelot();
-
-    await app.RunAsync();
+    app.UseOcelot().Wait();
+    app.Run();
 }
 catch (Exception)
 {

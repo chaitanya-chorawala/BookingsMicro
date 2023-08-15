@@ -8,20 +8,22 @@ public class HotelService : IHotelService
 {
     private readonly IHotelRepository _hotelRepository;
     private readonly IMessageBusClient _messageBusClient;
+    private readonly User _user;
 
-    public HotelService(IHotelRepository hotelRepository, IMessageBusClient messageBusClient)
+    public HotelService(IHotelRepository hotelRepository, IMessageBusClient messageBusClient, IClaimPrincipalAccessor claimPrincipalAccessor)
     {
         _hotelRepository = hotelRepository;
         _messageBusClient = messageBusClient;
+        _user = claimPrincipalAccessor.User;
     }
     public async Task BookHotel(int id)
     {
         var hotel = await _hotelRepository.GetHotelById(id);
         var message = new HotelPublishedDto()
         {
-            Id = hotel.hotelId,
-            Name = hotel.name,
-            Event = "Hotel_Publish"
+            Id = hotel.hotelId,            
+            Event = "Hotel_Publish",
+            UserId = _user?.Id ?? ""
         };
         _messageBusClient.PublishHotel(message);
     }

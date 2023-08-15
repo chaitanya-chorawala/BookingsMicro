@@ -1,0 +1,398 @@
+{
+	"info": {
+		"_postman_id": "3afaf4c3-17dd-49d2-bcef-e5fb1a96df87",
+		"name": "BookingsMicro",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Hotel",
+			"item": [
+				{
+					"name": "List All Hotel",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:62122/api/hs/hotel/ListAllHotel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "62122",
+							"path": [
+								"api",
+								"hs",
+								"hotel",
+								"ListAllHotel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Hotel By Id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:62122/api/hs/hotel/GetHotelById/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "62122",
+							"path": [
+								"api",
+								"hs",
+								"hotel",
+								"GetHotelById",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Book Hotel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI5Y2Y5OGFmYi0zMjUyLTQ1YzUtYmY2ZS03MjQ1MTdkMzU2NmYiLCJ1bmlxdWVfbmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJyb2xlIjoiQURNSU4iLCJuYmYiOjE2OTIwOTI5NTgsImV4cCI6MTY5MjA5Mzg1OCwiaWF0IjoxNjkyMDkyOTU4LCJpc3MiOiJodHRwOi8vaWRlbnRpdHkuYXBpOjgwIiwiYXVkIjoiaHR0cDovL2lkZW50aXR5LmFwaTo4MCJ9.JROaA42_Xo5KHx0CY3SoR-e7lZExuBy6JkuvSK-40MM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:62122/api/hs/hotel/BookHotel/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "62122",
+							"path": [
+								"api",
+								"hs",
+								"hotel",
+								"BookHotel",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Activity",
+			"item": [
+				{
+					"name": "Activity By Id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:62122/api/as/activity/GetActivityById/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "62122",
+							"path": [
+								"api",
+								"as",
+								"activity",
+								"GetActivityById",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Activity",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:62122/api/as/activity/ListAllActivity",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "62122",
+							"path": [
+								"api",
+								"as",
+								"activity",
+								"ListAllActivity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Book Activity",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI5Y2Y5OGFmYi0zMjUyLTQ1YzUtYmY2ZS03MjQ1MTdkMzU2NmYiLCJ1bmlxdWVfbmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJyb2xlIjoiQURNSU4iLCJuYmYiOjE2OTIwOTI5NTgsImV4cCI6MTY5MjA5Mzg1OCwiaWF0IjoxNjkyMDkyOTU4LCJpc3MiOiJodHRwOi8vaWRlbnRpdHkuYXBpOjgwIiwiYXVkIjoiaHR0cDovL2lkZW50aXR5LmFwaTo4MCJ9.JROaA42_Xo5KHx0CY3SoR-e7lZExuBy6JkuvSK-40MM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:62122/api/as/activity/BookActivity/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "62122",
+							"path": [
+								"api",
+								"as",
+								"activity",
+								"BookActivity",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Identity",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:62122/api/is/Auth/Login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "62122",
+							"path": [
+								"api",
+								"is",
+								"Auth",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI5Y2Y5OGFmYi0zMjUyLTQ1YzUtYmY2ZS03MjQ1MTdkMzU2NmYiLCJ1bmlxdWVfbmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJyb2xlIjoiQURNSU4iLCJuYmYiOjE2OTIwMTUxNDYsImV4cCI6MTY5MjAxNjA0NiwiaWF0IjoxNjkyMDE1MTQ2LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo3MDY0LyIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjcwNjQvIn0.d2nOe_xbPAqzny0uFHwnuhwuQGf_CPeC7QA_Unv9YZI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI5Y2Y5OGFmYi0zMjUyLTQ1YzUtYmY2ZS03MjQ1MTdkMzU2NmYiLCJ1bmlxdWVfbmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJyb2xlIjoiQURNSU4iLCJuYmYiOjE2OTIwOTI2MjcsImV4cCI6MTY5MjA5MzUyNywiaWF0IjoxNjkyMDkyNjI3LCJpc3MiOiJodHRwOi8vaWRlbnRpdHkuYXBpOjgwIiwiYXVkIjoiaHR0cDovL2lkZW50aXR5LmFwaTo4MCJ9.alO52dB7cmBkaiKcZxjRVnaPknuWCEBDYvEtNXiK27Y\",\r\n  \"refreshToken\": \"cJBMwQKtQSgG1oJyzjAnpNOLMrOZY0HZLl/korco4N4=\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:62122/api/is/Auth/refresh",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "62122",
+							"path": [
+								"api",
+								"is",
+								"Auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"user1\",\r\n  \"password\": \"user1\",\r\n  \"email\": \"user1@user.com\",\r\n  \"role\": \"user\",\r\n  \"isActive\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:62122/api/is/Auth/Register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "62122",
+							"path": [
+								"api",
+								"is",
+								"Auth",
+								"Register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reservation",
+			"item": [
+				{
+					"name": "List All Reservation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI5Y2Y5OGFmYi0zMjUyLTQ1YzUtYmY2ZS03MjQ1MTdkMzU2NmYiLCJ1bmlxdWVfbmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJyb2xlIjoiQURNSU4iLCJuYmYiOjE2OTIwOTQ1NjMsImV4cCI6MTY5MjA5NTQ2MywiaWF0IjoxNjkyMDk0NTYzLCJpc3MiOiJodHRwOi8vaWRlbnRpdHkuYXBpOjgwIiwiYXVkIjoiaHR0cDovL2lkZW50aXR5LmFwaTo4MCJ9.viNWFe_TRop5dCD8t63eGA_SgPAsT7yPF0WdWRwFrrc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:62122/api/rs/reservation/ListAllReservation",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "62122",
+							"path": [
+								"api",
+								"rs",
+								"reservation",
+								"ListAllReservation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reservation By Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI5Y2Y5OGFmYi0zMjUyLTQ1YzUtYmY2ZS03MjQ1MTdkMzU2NmYiLCJ1bmlxdWVfbmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJyb2xlIjoiQURNSU4iLCJuYmYiOjE2OTIwOTQ1NjMsImV4cCI6MTY5MjA5NTQ2MywiaWF0IjoxNjkyMDk0NTYzLCJpc3MiOiJodHRwOi8vaWRlbnRpdHkuYXBpOjgwIiwiYXVkIjoiaHR0cDovL2lkZW50aXR5LmFwaTo4MCJ9.viNWFe_TRop5dCD8t63eGA_SgPAsT7yPF0WdWRwFrrc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:62122/api/rs/reservation/GetReservationById/1002",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "62122",
+							"path": [
+								"api",
+								"rs",
+								"reservation",
+								"GetReservationById",
+								"1002"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Book Activity",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI5Y2Y5OGFmYi0zMjUyLTQ1YzUtYmY2ZS03MjQ1MTdkMzU2NmYiLCJ1bmlxdWVfbmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJyb2xlIjoiQURNSU4iLCJuYmYiOjE2OTIwOTI5NTgsImV4cCI6MTY5MjA5Mzg1OCwiaWF0IjoxNjkyMDkyOTU4LCJpc3MiOiJodHRwOi8vaWRlbnRpdHkuYXBpOjgwIiwiYXVkIjoiaHR0cDovL2lkZW50aXR5LmFwaTo4MCJ9.JROaA42_Xo5KHx0CY3SoR-e7lZExuBy6JkuvSK-40MM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:62122/api/rs/reservation/BookActivity/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "62122",
+							"path": [
+								"api",
+								"rs",
+								"reservation",
+								"BookActivity",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace Reservation.API.Controllers;
 
 [Route("api/[controller]")]
-[ApiController]
+[ApiController, Authorize]
 public class ReservationController : ControllerBase
 {
     private readonly IReservationRepository _reservationRepository;
@@ -26,27 +26,31 @@ public class ReservationController : ControllerBase
     }
 
     /// <summary>
-    /// List all reservations
+    /// List all reservations with pagination
     /// </summary>
-    /// <returns></returns>     
-    [AllowAnonymous]
+    /// <returns></returns>         
     [HttpGet("ListAllReservation")]
-    public async Task<IActionResult> ListAllReservation()
+    public async Task<IActionResult> ListAllReservation(int? pageIndex, int? pageSize)
     {
         try
         {
-            string cacheKey = "reservationList";            
+            string cacheKey = "reservations";            
 
             var cacheStr = await _cache.GetStringAsync(cacheKey);
             if (!string.IsNullOrEmpty(cacheStr))
             {
                 var cachedReservationList = JsonSerializer.Deserialize<IEnumerable<ReservationResponse>>(cacheStr);
                 return Ok(cachedReservationList);
-            }  
-            
-            var reservationList = await _reservationRepository.ReservationList();
+            }              
+
+            var reservationList = await _reservationRepository.ReservationList(pageIndex ?? 1, pageSize ?? 10);
             cacheStr = JsonSerializer.Serialize(reservationList);
-            _cache.SetString(cacheKey, cacheStr);
+
+            var cacheEntryOptions = new DistributedCacheEntryOptions()
+                        .SetSlidingExpiration(TimeSpan.FromSeconds(30))
+                        .SetAbsoluteExpiration(TimeSpan.FromSeconds(60));
+
+            await _cache.SetStringAsync(cacheKey, cacheStr,cacheEntryOptions);
 
             return Ok(reservationList);
         }
@@ -79,13 +83,13 @@ public class ReservationController : ControllerBase
     /// Book activity By Id
     /// </summary>
     /// <param name="activityid"></param>
-    /// <returns></returns>    
+    /// <returns></returns>      
     [HttpPost("BookActivity/{activityid:int}")]
     public async Task<IActionResult> BookActivity(int activityid)
     {
         try
         {
-            await _reservationService.BookActivity(activityid,"");
+            await _reservationService.BookActivity(activityid);
             return Ok();
         }
         catch (Exception)

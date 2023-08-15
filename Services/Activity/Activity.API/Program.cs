@@ -23,15 +23,15 @@ try
         {
             var allowedOriginAddress = configuration.GetValue<string>("AllowedCorsUrls");
             var addresses = allowedOriginAddress.Split(';');
-            builder.WithOrigins(addresses)
+            builder.AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader();
         });
     });
 
     // Add services to the container.
-    builder.Services.AddPersistenceServices();
     builder.Services.AddHttpContextAccessor();
+    builder.Services.AddPersistenceServices();
     builder.Services.AddControllers();
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
