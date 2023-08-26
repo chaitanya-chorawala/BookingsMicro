@@ -36,21 +36,21 @@ public class ReservationController : ControllerBase
         {
             string cacheKey = "reservations";            
 
-            var cacheStr = await _cache.GetStringAsync(cacheKey);
-            if (!string.IsNullOrEmpty(cacheStr))
-            {
-                var cachedReservationList = JsonSerializer.Deserialize<IEnumerable<ReservationResponse>>(cacheStr);
-                return Ok(cachedReservationList);
-            }              
+            //var cacheStr = await _cache.GetStringAsync(cacheKey);
+            //if (!string.IsNullOrEmpty(cacheStr))
+            //{
+            //    var cachedReservationList = JsonSerializer.Deserialize<IEnumerable<ReservationResponse>>(cacheStr);
+            //    return Ok(cachedReservationList);
+            //}              
 
             var reservationList = await _reservationRepository.ReservationList(pageIndex ?? 1, pageSize ?? 10);
-            cacheStr = JsonSerializer.Serialize(reservationList);
+            //cacheStr = JsonSerializer.Serialize(reservationList);
 
-            var cacheEntryOptions = new DistributedCacheEntryOptions()
-                        .SetSlidingExpiration(TimeSpan.FromSeconds(30))
-                        .SetAbsoluteExpiration(TimeSpan.FromSeconds(60));
+            //var cacheEntryOptions = new DistributedCacheEntryOptions()
+            //            .SetSlidingExpiration(TimeSpan.FromSeconds(30))
+            //            .SetAbsoluteExpiration(TimeSpan.FromSeconds(60));
 
-            await _cache.SetStringAsync(cacheKey, cacheStr,cacheEntryOptions);
+            //await _cache.SetStringAsync(cacheKey, cacheStr,cacheEntryOptions);
 
             return Ok(reservationList);
         }

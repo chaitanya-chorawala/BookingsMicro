@@ -33,7 +33,13 @@ public class MessageBusSubscriber : BackgroundService
                     HostName = configuration["RabbitMQ:Host"]!,
                     UserName = configuration["RabbitMQ:User"]!,
                     Password = configuration["RabbitMQ:Pass"]!,
-                    VirtualHost = configuration["RabbitMQ:VirtualHost"]!
+                    Port = int.Parse(configuration["RabbitMQ:Port"]!),
+                    VirtualHost = configuration["RabbitMQ:VirtualHost"]!,
+                    Ssl = new SslOption
+                    {
+                        ServerName = configuration["RabbitMQ:Host"]!,
+                        Enabled = true
+                    }
                 };
 
                 _connection = factory.CreateConnection();

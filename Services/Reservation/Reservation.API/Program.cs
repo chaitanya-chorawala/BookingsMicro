@@ -92,8 +92,12 @@ try
 
     builder.Services.AddStackExchangeRedisCache(options =>
     {
-        options.Configuration = "redis_cache:6379"; // redis is the container name of the redis service. 6379 is the default port
-        options.InstanceName = "SampleInstance";        
+        options.Configuration = builder.Configuration["Redis:conn"]!; // redis connection
+        options.InstanceName = "SampleInstance";
+        options.ConfigurationOptions = new StackExchange.Redis.ConfigurationOptions
+        {
+            AbortOnConnectFail = false
+        };
     });
 
     var app = builder.Build();

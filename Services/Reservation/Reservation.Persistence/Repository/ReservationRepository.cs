@@ -65,7 +65,7 @@ public class ReservationRepository : IReservationRepository
         }
     }
 
-    public async Task<GenericResponseWithPaging<IEnumerable<ReservationResponse>?>> ReservationList(int pageIndex, int pageSize)
+    public async Task<GenericResponseWithPaging<IEnumerable<ReservationResponse?>>> ReservationList(int pageIndex, int pageSize)
     {
         try
         {
@@ -74,7 +74,7 @@ public class ReservationRepository : IReservationRepository
             parameters.Add("@PageIndex", pageIndex, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@PageSize", pageSize, DbType.Int32, ParameterDirection.Input);
             var result = await conn.QueryMultipleAsync("ReservationGet",parameters,commandType: CommandType.StoredProcedure).ConfigureAwait(false);
-            var response = new GenericResponseWithPaging<IEnumerable<ReservationResponse>>()
+            var response = new GenericResponseWithPaging<IEnumerable<ReservationResponse?>>()
             {
                 Data = result.Read<ReservationResponse>(),
                 Pagination = result.Read<PagingResponse>()

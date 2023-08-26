@@ -8,7 +8,7 @@ try
 
     // Add services to the container.
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConn")));
+        options.UseSqlServer(builder.Configuration.GetConnectionString("connStr")));
 
     builder.Services.AddTransient<IRefreshTokenGenerator, RefreshTokenGenerator>();
 

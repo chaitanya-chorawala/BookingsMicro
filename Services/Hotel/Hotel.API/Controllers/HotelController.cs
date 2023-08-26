@@ -34,23 +34,25 @@ public class HotelController : ControllerBase
     {
         try
         {
-            string cacheKey = "hotelList";            
+            string cacheKey = "hotelList";
 
-            var cacheStr = await _cache.GetStringAsync(cacheKey);
-            if (!string.IsNullOrEmpty(cacheStr))
-            {
-                var cachedHotelList = JsonSerializer.Deserialize<IEnumerable<HotelResponse>>(cacheStr);
-                return Ok(cachedHotelList);
-            }  
+            //temporary disable cache
+            //var cacheStr = await _cache.GetStringAsync(cacheKey);
+            //if (!string.IsNullOrEmpty(cacheStr))
+            //{
+            //    var cachedHotelList = JsonSerializer.Deserialize<IEnumerable<HotelResponse>>(cacheStr);
+            //    return Ok(cachedHotelList);
+            //}  
             
             var hotelList = await _hotelRepository.HotelList();
-            cacheStr = JsonSerializer.Serialize(hotelList);
+            //temporary disable cache
+            //cacheStr = JsonSerializer.Serialize(hotelList);
 
-            var cacheEntryOptions = new DistributedCacheEntryOptions()
-                        .SetSlidingExpiration(TimeSpan.FromSeconds(60))
-                        .SetAbsoluteExpiration(TimeSpan.FromSeconds(3600));
+            //var cacheEntryOptions = new DistributedCacheEntryOptions()
+            //            .SetSlidingExpiration(TimeSpan.FromSeconds(60))
+            //            .SetAbsoluteExpiration(TimeSpan.FromSeconds(3600));
 
-            await _cache.SetStringAsync(cacheKey, cacheStr, cacheEntryOptions);
+            //await _cache.SetStringAsync(cacheKey, cacheStr, cacheEntryOptions);
 
             return Ok(hotelList);
         }
